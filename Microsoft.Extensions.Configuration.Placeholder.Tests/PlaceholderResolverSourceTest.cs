@@ -12,7 +12,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
         public void Constructor_ThrowsIfNulls()
         {
             // Arrange
-            IList<IConfigurationSource> sources = null;
+            IList<IConfigurationSource> sources = null!;
 
             // Act and Assert
             Assert.Throws<ArgumentNullException>(() => new PlaceholderResolverSource(sources));

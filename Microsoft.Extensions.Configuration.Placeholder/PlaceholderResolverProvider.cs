@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -19,11 +20,11 @@ namespace Microsoft.Extensions.Configuration.Placeholder
         // ReSharper disable once InconsistentNaming
         public readonly ILogger<PlaceholderResolverProvider>? _logger;
         // ReSharper disable once InconsistentNaming
-        public IConfigurationRoot? _configuration;
+        public IConfiguration? _configuration;
 #else
         private readonly IList<IConfigurationProvider>? _providers;
         private readonly ILogger<PlaceholderResolverProvider>? _logger;
-        private IConfigurationRoot? _configuration;
+        private IConfiguration? _configuration;
 #endif
         /// <summary>
         /// Initializes a new instance of the <see cref="PlaceholderResolverProvider"/> class.
@@ -31,22 +32,23 @@ namespace Microsoft.Extensions.Configuration.Placeholder
         /// </summary>
         /// <param name="configuration">the configuration the provider uses when resolving placeholders</param>
         /// <param name="logFactory">the logger factory to use</param>
-        public PlaceholderResolverProvider(IConfigurationRoot configuration, ILoggerFactory? logFactory = null)
+        public PlaceholderResolverProvider(IConfiguration configuration, ILoggerFactory? logFactory = null)
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+
             _logger = logFactory?.CreateLogger<PlaceholderResolverProvider>();
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlaceholderResolverProvider"/> class.
-        /// The new placeholder resolver wraps the provided configuration providers.  The <see cref="_configuration"/>
-        /// will be created from these providers.
+        /// The new placeholder resolver wraps the provided configuration providers.  The <see cref="IConfigurationRoot"/> will be created from these providers.
         /// </summary>
         /// <param name="providers">the configuration providers the resolver uses when resolving placeholders</param>
         /// <param name="logFactory">the logger factory to use</param>
         public PlaceholderResolverProvider(IList<IConfigurationProvider> providers, ILoggerFactory? logFactory = null)
         {
             _providers = providers ?? throw new ArgumentNullException(nameof(providers));
+
             _logger = logFactory?.CreateLogger<PlaceholderResolverProvider>();
         }
 
@@ -57,7 +59,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns><c>True</c> if a value for the specified key was found, otherwise <c>false</c>.</returns>
-        public bool TryGet(string key, out string value)
+        public bool TryGet(string key, [NotNullWhen(true)] out string? value)
         {
             EnsureInitialized();
 
@@ -95,14 +97,9 @@ namespace Microsoft.Extensions.Configuration.Placeholder
         /// </summary>
         public void Load()
         {
-            if (_configuration == null)
-            {
-                _configuration = new ConfigurationRoot(_providers);
-            }
-            else
-            {
-                _configuration.Reload();
-            }
+            if (_configuration == null) _configuration = new ConfigurationRoot(_providers);
+            else if (_configuration is IConfigurationRoot root)
+                root.Reload();
         }
 
         /// <summary>
@@ -116,7 +113,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder
         {
             EnsureInitialized();
 
-            var section = parentPath == null ? (IConfiguration)_configuration! : _configuration!.GetSection(parentPath);
+            var section = parentPath == null ? _configuration! : _configuration!.GetSection(parentPath);
 
             var children = section.GetChildren();
 

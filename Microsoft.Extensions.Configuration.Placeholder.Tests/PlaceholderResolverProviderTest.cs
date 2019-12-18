@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using Microsoft.Extensions.Logging;
 using Xunit;
 
 namespace Microsoft.Extensions.Configuration.Placeholder.Tests
@@ -203,7 +203,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             Assert.Null(holder._configuration);
             holder.Load();
             Assert.NotNull(holder._configuration);
-            Assert.Equal("value1", holder._configuration["key1"]);
+            Assert.Equal("value1", holder._configuration!["key1"]);
         }
 
         [Fact]

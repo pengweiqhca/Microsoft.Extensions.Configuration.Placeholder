@@ -18,16 +18,11 @@ namespace Microsoft.Extensions.Configuration
         /// <returns>builder</returns>
         public static IConfigurationBuilder AddPlaceholderResolver(this IConfigurationBuilder builder, ILoggerFactory? loggerFactory = null)
         {
-            if (builder == null)
-            {
-                throw new ArgumentNullException(nameof(builder));
-            }
+            if (builder == null) throw new ArgumentNullException(nameof(builder));
 
-            var resolver = new PlaceholderResolverSource(builder.Sources, loggerFactory);
             builder.Sources.Clear();
-            builder.Add(resolver);
 
-            return builder;
+            return builder.Add(new PlaceholderResolverSource(builder.Sources, loggerFactory));
         }
 
         /// <summary>
@@ -37,12 +32,9 @@ namespace Microsoft.Extensions.Configuration
         /// <param name="configuration">incoming configuration to wrap</param>
         /// <param name="loggerFactory">the logger factory to use</param>
         /// <returns>a new configuration</returns>
-        public static IConfigurationRoot AddPlaceholderResolver(this IConfigurationRoot configuration, ILoggerFactory? loggerFactory = null)
+        public static IConfigurationRoot AddPlaceholderResolver(this IConfiguration configuration, ILoggerFactory? loggerFactory = null)
         {
-            if (configuration == null)
-            {
-                throw new ArgumentNullException(nameof(configuration));
-            }
+            if (configuration == null) throw new ArgumentNullException(nameof(configuration));
 
             return new ConfigurationRoot(new IConfigurationProvider[] { new PlaceholderResolverProvider(configuration, loggerFactory) });
         }
