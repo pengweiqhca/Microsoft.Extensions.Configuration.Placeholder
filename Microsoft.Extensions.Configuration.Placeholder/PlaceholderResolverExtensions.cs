@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration.Placeholder;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Runtime.InteropServices;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.Configuration
 {
+    /// <summary></summary>
     public static class PlaceholderResolverExtensions
     {
         /// <summary>
