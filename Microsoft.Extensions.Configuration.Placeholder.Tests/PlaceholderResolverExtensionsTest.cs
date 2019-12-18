@@ -39,9 +39,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             // Act and Assert
             configurationBuilder.AddPlaceholderResolver();
 
-            var placeholderSource =
-                configurationBuilder.Sources.OfType<PlaceholderResolverSource>().SingleOrDefault();
-            Assert.NotNull(placeholderSource);
+            Assert.Single( configurationBuilder.Sources.OfType<PlaceholderResolverSource>());
         }
 
         [Fact]
