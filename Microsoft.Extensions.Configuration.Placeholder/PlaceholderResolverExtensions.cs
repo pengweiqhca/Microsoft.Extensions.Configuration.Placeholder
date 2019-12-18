@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration.Placeholder;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Runtime.InteropServices;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.Configuration
@@ -20,9 +21,11 @@ namespace Microsoft.Extensions.Configuration
         {
             if (builder == null) throw new ArgumentNullException(nameof(builder));
 
+            var resolver = new PlaceholderResolverSource(builder.Sources, loggerFactory);
+
             builder.Sources.Clear();
 
-            return builder.Add(new PlaceholderResolverSource(builder.Sources, loggerFactory));
+            return builder.Add(resolver);
         }
 
         /// <summary>

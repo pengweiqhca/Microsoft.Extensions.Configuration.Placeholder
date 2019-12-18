@@ -15,7 +15,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder
     {
         private const string Prefix = "${";
         private const string Suffix = "}";
-        private const string Separator = "?";
+        private const string Separator = "??";
 
         /// <summary>
         /// Replaces all placeholders of the form <code> ${some:config:reference?default_if_not_present}</code>

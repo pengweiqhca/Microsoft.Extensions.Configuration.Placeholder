@@ -4,6 +4,13 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Tuhu.Extensions.Configuration.Placeholder</PackageId>
+    <Authors>Wei Peng</Authors>
+    <Description>Microsoft.Extensions.Configuration support placeholder</Description>
+    <RepositoryUrl>https://github.com/pengweiqhca/Microsoft.Extensions.Configuration.Placeholder</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>Microsoft.Extensions.Configuration support placeholder</PackageReleaseNotes>
+    <PackageTags>config configuration placeholder</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

@@ -65,8 +65,8 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             var settings = new Dictionary<string, string>
             {
                 { "key1", "value1" },
-                { "key2", "${key1?notfound}" },
-                { "key3", "${nokey?notfound}" },
+                { "key2", "${key1??notfound}" },
+                { "key3", "${nokey??notfound}" },
                 { "key4", "${nokey}" },
             };
 
@@ -93,8 +93,8 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             var settings = new Dictionary<string, string>
             {
                 { "key1", "value1" },
-                { "key2", "${key1?notfound}" },
-                { "key3", "${nokey?notfound}" },
+                { "key2", "${key1??notfound}" },
+                { "key3", "${nokey??notfound}" },
                 { "key4", "${nokey}" },
             };
 
@@ -133,7 +133,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
                     },
                       ""cloud"": {
                         ""config"": {
-                            ""name"" : ""${spring:bar:name?noname}"",
+                            ""name"" : ""${spring:bar:name??noname}"",
                         }
                       }
                     }
@@ -147,7 +147,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
                     },
                       ""cloud"": {
                         ""config"": {
-                            ""name"" : ""${spring:bar:name?noname}"",
+                            ""name"" : ""${spring:bar:name??noname}"",
                         }
                       }
                     }
@@ -218,7 +218,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
                     },
                       ""cloud"": {
                         ""config"": {
-                            ""name"" : ""${spring:bar:name?noname}"",
+                            ""name"" : ""${spring:bar:name??noname}"",
                         }
                       }
                     }
@@ -232,7 +232,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
                     },
                       ""cloud"": {
                         ""config"": {
-                            ""name"" : ""${spring:bar:name?noname}"",
+                            ""name"" : ""${spring:bar:name??noname}"",
                         }
                       }
                     }
@@ -269,7 +269,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             var settings = new Dictionary<string, string>
             {
                 { "spring:bar:name", "myName" },
-                { "spring:cloud:name", "${spring:bar:name?noname}" },
+                { "spring:cloud:name", "${spring:bar:name??noname}" },
             };
 
             var builder = new ConfigurationBuilder();

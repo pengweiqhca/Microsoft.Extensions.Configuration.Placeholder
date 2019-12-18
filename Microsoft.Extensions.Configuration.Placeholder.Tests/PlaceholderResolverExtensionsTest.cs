@@ -39,7 +39,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             // Act and Assert
             configurationBuilder.AddPlaceholderResolver();
 
-            Assert.Single( configurationBuilder.Sources.OfType<PlaceholderResolverSource>());
+            Assert.Single(configurationBuilder.Sources.OfType<PlaceholderResolverSource>());
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
                     },
                       ""cloud"": {
                         ""config"": {
-                            ""name"" : ""${spring:bar:name?noname}"",
+                            ""name"" : ""${spring:bar:name??noname}"",
                         }
                       }
                     }
@@ -100,7 +100,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
         </bar>
       <cloud>
         <config>
-            <name>${spring:bar:name?noName}</name>
+            <name>${spring:bar:name??noname}</name>
         </config>
       </cloud>
     </spring>
@@ -124,7 +124,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
 [spring:bar]
     name=myName
 [spring:cloud:config]
-    name=${spring:bar:name?noName}
+    name=${spring:bar:name??noName}
 ";
 
             var configurationBuilder = new ConfigurationBuilder();
@@ -142,10 +142,10 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
         {
             // Arrange
             var appsettings = new[]
-                {
-                            "spring:bar:name=myName",
-                            "--spring:cloud:config:name=${spring:bar:name?noName}"
-                };
+            {
+                "spring:bar:name=myName",
+                "--spring:cloud:config:name=${spring:bar:name??noName}"
+            };
 
             var configurationBuilder = new ConfigurationBuilder();
             configurationBuilder.AddCommandLine(appsettings);
@@ -168,7 +168,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
                     },
                       ""cloud"": {
                         ""config"": {
-                            ""name"" : ""${spring:xml:name?noname}"",
+                            ""name"" : ""${spring:xml:name??noname}"",
                         }
                       }
                     }
@@ -178,18 +178,18 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
 <settings>
     <spring>
         <xml>
-            <name>${spring:ini:name?noName}</name>
+            <name>${spring:ini:name??noName}</name>
         </xml>
     </spring>
 </settings>";
 
             var appsettingsIni = @"
 [spring:ini]
-    name=${spring:line:name?noName}
+    name=${spring:line:name??noName}
 ";
             var appsettingsLine = new[]
     {
-                            "--spring:line:name=${spring:json:name?noName}"
+                            "--spring:line:name=${spring:json:name??noName}"
     };
 
             var configurationBuilder = new ConfigurationBuilder();
@@ -235,8 +235,8 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             var settings = new Dictionary<string, string>
             {
                 { "key1", "value1" },
-                { "key2", "${key1?notfound}" },
-                { "key3", "${nokey?notfound}" },
+                { "key2", "${key1??notfound}" },
+                { "key3", "${nokey??notfound}" },
                 { "key4", "${nokey}" },
             };
 
