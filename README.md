@@ -10,7 +10,7 @@
   "SomeArray": ["a", "d"],
   "ResolvedPlaceholderFromEnvVariables": "${PATH??NotFound}",
   "UnresolvedPlaceholder": "${SomKeyNotFound??NotFound}",
-  "ResolvedPlaceholderFromJson": "${Logging:LogLevel:System?${Logging:LogLevel:Default??NotFound}}",
+  "ResolvedPlaceholderFromJson": "${Logging:LogLevel:System??${Logging:LogLevel:Default??NotFound}}",
   "IndexPolaceholder": "${SomeArray[1]}abc"
 }
 ```
