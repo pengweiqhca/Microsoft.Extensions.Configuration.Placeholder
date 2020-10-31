@@ -10,6 +10,23 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
     public class PropertyPlaceholderHelperTest
     {
         [Fact]
+        public void ResolvePlaceholders_ResolvesNullAndEmpty()
+        {
+            // Arrange
+            var text = "foo=${foo??a},bar=${foo||b}";
+            var builder = new ConfigurationBuilder();
+            var dic1 = new Dictionary<string, string>
+            {
+                {"foo", ""}
+            };
+            builder.AddInMemoryCollection(dic1);
+
+            // Act and Assert
+            var result = builder.Build().ResolvePlaceholders(text);
+            Assert.Equal("foo=,bar=b", result);
+        }
+
+        [Fact]
         public void ResolvePlaceholders_ResolvesSinglePlaceholder()
         {
             // Arrange
@@ -17,8 +34,8 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             var builder = new ConfigurationBuilder();
             var dic1 = new Dictionary<string, string>
             {
-                    { "foo", "bar" }
-                };
+                {"foo", "bar"}
+            };
             builder.AddInMemoryCollection(dic1);
             var config = builder.Build();
 
@@ -35,9 +52,9 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             var builder = new ConfigurationBuilder();
             var dic1 = new Dictionary<string, string>
             {
-                    { "foo", "bar" },
-                    { "bar", "baz" }
-                };
+                {"foo", "bar"},
+                {"bar", "baz"}
+            };
             builder.AddInMemoryCollection(dic1);
 
             // Act and Assert
@@ -53,9 +70,9 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             var builder = new ConfigurationBuilder();
             var dic1 = new Dictionary<string, string>
             {
-                    { "bar", "${baz}" },
-                    { "baz", "bar" }
-                };
+                {"bar", "${baz}"},
+                {"baz", "bar"}
+            };
             builder.AddInMemoryCollection(dic1);
             var config = builder.Build();
 
@@ -72,9 +89,9 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             var builder1 = new ConfigurationBuilder();
             var dic1 = new Dictionary<string, string>
             {
-                    { "bar", "bar" },
-                    { "inner", "ar" }
-                };
+                {"bar", "bar"},
+                {"inner", "ar"}
+            };
             builder1.AddInMemoryCollection(dic1);
             var config1 = builder1.Build();
 
@@ -82,11 +99,11 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             var builder2 = new ConfigurationBuilder();
             var dic2 = new Dictionary<string, string>
             {
-                    { "top", "${child}+${child}" },
-                    { "child", "${${differentiator}.grandchild}" },
-                    { "differentiator", "first" },
-                    { "first.grandchild", "actualValue" }
-                };
+                {"top", "${child}+${child}"},
+                {"child", "${${differentiator}.grandchild}"},
+                {"differentiator", "first"},
+                {"first.grandchild", "actualValue"}
+            };
             builder2.AddInMemoryCollection(dic2);
             var config2 = builder2.Build();
 
@@ -105,8 +122,8 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             var builder = new ConfigurationBuilder();
             var dic1 = new Dictionary<string, string>
             {
-                    { "foo", "bar" }
-                };
+                {"foo", "bar"}
+            };
             builder.AddInMemoryCollection(dic1);
             var config = builder.Build();
 
@@ -166,8 +183,8 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             builder.AddInMemoryCollection(
                 new Dictionary<string, string>
                 {
-                    { "foo", "${bar}" },
-                    { "bar", "baz" }
+                    {"foo", "${bar}"},
+                    {"bar", "baz"}
                 });
 
             // act
@@ -186,7 +203,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             builder.AddInMemoryCollection(
                 new Dictionary<string, string>
                 {
-                    { "foo", "${bar}" }
+                    {"foo", "${bar}"}
                 });
 
             // act
@@ -203,9 +220,9 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             var builder2 = new ConfigurationBuilder();
             var dic2 = new Dictionary<string, string>
             {
-                { "top", "${child}+${child}" },
-                { "child", "${differentiator}" },
-                { "differentiator", "${top}abc" }
+                {"top", "${child}+${child}"},
+                {"child", "${differentiator}"},
+                {"differentiator", "${top}abc"}
             };
             builder2.AddInMemoryCollection(dic2);
             var config2 = builder2.Build();

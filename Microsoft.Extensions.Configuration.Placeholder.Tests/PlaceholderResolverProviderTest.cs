@@ -34,8 +34,8 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
         public void Constructor_WithConfiguration()
         {
             var holder = new PlaceholderResolverProvider(new ConfigurationBuilder().Build());
-            Assert.NotNull(holder._configuration);
-            Assert.Null(holder._providers);
+            Assert.NotNull(holder.Configuration);
+            Assert.Null(holder.Providers);
         }
 
         [Fact]
@@ -43,8 +43,8 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
         {
             var providers = new List<IConfigurationProvider>();
             var holder = new PlaceholderResolverProvider(providers);
-            Assert.Null(holder._configuration);
-            Assert.Same(providers, holder._providers);
+            Assert.Null(holder.Configuration);
+            Assert.Same(providers, holder.Providers);
         }
 
         [Fact]
@@ -53,10 +53,10 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             var loggerFactory = new LoggerFactory();
 
             var holder = new PlaceholderResolverProvider(new List<IConfigurationProvider>(), loggerFactory);
-            Assert.NotNull(holder._logger);
+            Assert.NotNull(holder.Logger);
 
             holder = new PlaceholderResolverProvider(new ConfigurationBuilder().Build(), loggerFactory);
-            Assert.NotNull(holder._logger);
+            Assert.NotNull(holder.Logger);
         }
 
         [Fact]
@@ -77,6 +77,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             var holder = new PlaceholderResolverProvider(providers);
 
             Assert.False(holder.TryGet("nokey", out var val));
+            Assert.Null(val);
             Assert.True(holder.TryGet("key1", out val));
             Assert.Equal("value1", val);
             Assert.True(holder.TryGet("key2", out val));
@@ -200,10 +201,10 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             var providers = builder.Build().Providers.ToList();
 
             var holder = new PlaceholderResolverProvider(providers);
-            Assert.Null(holder._configuration);
+            Assert.Null(holder.Configuration);
             holder.Load();
-            Assert.NotNull(holder._configuration);
-            Assert.Equal("value1", holder._configuration!["key1"]);
+            Assert.NotNull(holder.Configuration);
+            Assert.Equal("value1", holder.Configuration!["key1"]);
         }
 
         [Fact]

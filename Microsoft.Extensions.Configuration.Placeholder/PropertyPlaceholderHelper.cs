@@ -15,7 +15,8 @@ namespace Microsoft.Extensions.Configuration.Placeholder
     {
         private const string Prefix = "${";
         private const string Suffix = "}";
-        private const string Separator = "??";
+        private const string NullSeparator = "??";
+        private const string EmptySeparator = "||";
 
         /// <summary>
         /// Replaces all placeholders of the form <code> ${some:config:reference?default_if_not_present}</code>
@@ -28,6 +29,11 @@ namespace Microsoft.Extensions.Configuration.Placeholder
         public static string ResolvePlaceholders(this IConfiguration config, string property, ILogger? logger = null) =>
             ParseStringValue(property, config, new HashSet<string>(), logger);
 #if DEBUG
+        /// <summary></summary>
+        /// <param name="config"></param>
+        /// <param name="logger"></param>
+        /// <param name="useEmptyStringIfNotFound"></param>
+        /// <returns></returns>
         public static IEnumerable<KeyValuePair<string, string>> GetResolvedConfigurationPlaceholders(this IConfiguration config, ILogger? logger = null, bool useEmptyStringIfNotFound = true)
         {
             // setup a holding tank for resolved values
@@ -44,7 +50,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder
             return resolvedValues;
         }
 #endif
-        private static string ParseStringValue(string property, IConfiguration config, ISet<string> visitedPlaceHolders, ILogger? logger = null, bool useEmptyStringIfNotFound = false)
+        private static string ParseStringValue(string property, IConfiguration? config, ISet<string> visitedPlaceHolders, ILogger? logger = null, bool useEmptyStringIfNotFound = false)
         {
             if (config == null || string.IsNullOrEmpty(property)) return property;
 
@@ -74,16 +80,26 @@ namespace Microsoft.Extensions.Configuration.Placeholder
                     var propVal = config[lookup];
                     if (propVal == null)
                     {
-                        var separatorIndex = placeholder.IndexOf(Separator, StringComparison.Ordinal);
+                        var separatorIndex = placeholder.IndexOf(NullSeparator, StringComparison.Ordinal);
                         if (separatorIndex != -1)
                         {
-                            var actualPlaceholder = placeholder.Substring(0, separatorIndex);
-                            var defaultValue = placeholder.Substring(separatorIndex + Separator.Length);
-                            propVal = config[actualPlaceholder] ?? defaultValue;
+                            propVal = config[placeholder.Substring(0, separatorIndex)] ?? placeholder.Substring(separatorIndex + NullSeparator.Length);
                         }
-                        else if (useEmptyStringIfNotFound)
+                        else
                         {
-                            propVal = string.Empty;
+                            separatorIndex = placeholder.IndexOf(EmptySeparator, StringComparison.Ordinal);
+                            if (separatorIndex != -1)
+                            {
+                                propVal = config[placeholder.Substring(0, separatorIndex)];
+                                if (string.IsNullOrEmpty(propVal))
+                                {
+                                    propVal = placeholder.Substring(separatorIndex + EmptySeparator.Length);
+                                }
+                            }
+                            else if (useEmptyStringIfNotFound)
+                            {
+                                propVal = string.Empty;
+                            }
                         }
                     }
 

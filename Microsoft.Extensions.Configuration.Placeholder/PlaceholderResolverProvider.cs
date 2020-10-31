@@ -15,17 +15,16 @@ namespace Microsoft.Extensions.Configuration.Placeholder
     public class PlaceholderResolverProvider : IConfigurationProvider
     {
 #if DEBUG
-        // ReSharper disable once InconsistentNaming
-        public readonly IList<IConfigurationProvider>? _providers;
-        // ReSharper disable once InconsistentNaming
-        public readonly ILogger<PlaceholderResolverProvider>? _logger;
-        // ReSharper disable once InconsistentNaming
-        public IConfiguration? _configuration;
-#else
+        public IList<IConfigurationProvider>? Providers => _providers;
+
+        public ILogger<PlaceholderResolverProvider>? Logger => _logger;
+
+        public IConfiguration? Configuration => _configuration;
+#endif
         private readonly IList<IConfigurationProvider>? _providers;
         private readonly ILogger<PlaceholderResolverProvider>? _logger;
         private IConfiguration? _configuration;
-#endif
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PlaceholderResolverProvider"/> class.
         /// The new placeholder resolver wraps the provided configuration

@@ -56,8 +56,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             var provider =
                 configuration.Providers.OfType<PlaceholderResolverProvider>().SingleOrDefault();
 
-            Assert.NotNull(provider);
-            Assert.NotNull(provider._logger);
+            Assert.NotNull(provider?.Logger);
         }
 
         [Fact]

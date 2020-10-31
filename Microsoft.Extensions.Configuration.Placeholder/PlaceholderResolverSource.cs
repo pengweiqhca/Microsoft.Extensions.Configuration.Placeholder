@@ -31,7 +31,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder
             {
                 throw new ArgumentNullException(nameof(sources));
             }
-          
+
             _sources = new List<IConfigurationSource>(sources);
 
             _loggerFactory = logFactory;

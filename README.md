@@ -8,9 +8,11 @@
     }
   },
   "SomeArray": ["a", "d"],
+  "EmptyKey": "",
   "ResolvedPlaceholderFromEnvVariables": "${PATH??NotFound}",
   "UnresolvedPlaceholder": "${SomKeyNotFound??NotFound}",
   "ResolvedPlaceholderFromJson": "${Logging:LogLevel:System?${Logging:LogLevel:Default??NotFound}}",
+  "ResolvedEmpty": "${EmptyKey||abc}",
   "IndexPolaceholder": "${SomeArray[1]}abc"
 }
 ```

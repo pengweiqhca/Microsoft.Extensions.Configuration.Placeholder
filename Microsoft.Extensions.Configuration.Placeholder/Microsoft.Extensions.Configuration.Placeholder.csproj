@@ -15,6 +15,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageReleaseNotes>Microsoft.Extensions.Configuration support placeholder</PackageReleaseNotes>
     <PackageTags>config configuration placeholder</PackageTags>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
