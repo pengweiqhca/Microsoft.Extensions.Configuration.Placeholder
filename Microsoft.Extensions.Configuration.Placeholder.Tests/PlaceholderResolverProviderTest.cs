@@ -105,8 +105,8 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
 
             var holder = new PlaceholderResolverProvider(providers);
 
-            Assert.False(holder.TryGet("nokey", out var val));
-            Assert.True(holder.TryGet("key1", out val));
+            Assert.False(holder.TryGet("nokey", out _));
+            Assert.True(holder.TryGet("key1", out var val));
             Assert.Equal("value1", val);
             Assert.True(holder.TryGet("key2", out val));
             Assert.Equal("value1", val);

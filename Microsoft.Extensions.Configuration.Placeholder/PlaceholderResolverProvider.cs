@@ -15,10 +15,13 @@ namespace Microsoft.Extensions.Configuration.Placeholder
     public class PlaceholderResolverProvider : IConfigurationProvider
     {
 #if DEBUG
+        /// <summary></summary>
         public IList<IConfigurationProvider>? Providers => _providers;
 
+        /// <summary></summary>
         public ILogger<PlaceholderResolverProvider>? Logger => _logger;
 
+        /// <summary></summary>
         public IConfiguration? Configuration => _configuration;
 #endif
         private readonly IList<IConfigurationProvider>? _providers;
@@ -108,7 +111,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder
         /// <param name="earlierKeys">The child keys returned by the preceding providers for the same parent path.</param>
         /// <param name="parentPath">The parent path.</param>
         /// <returns>The child keys.</returns>
-        public IEnumerable<string> GetChildKeys(IEnumerable<string> earlierKeys, string parentPath)
+        public IEnumerable<string> GetChildKeys(IEnumerable<string> earlierKeys, string? parentPath)
         {
             EnsureInitialized();
 

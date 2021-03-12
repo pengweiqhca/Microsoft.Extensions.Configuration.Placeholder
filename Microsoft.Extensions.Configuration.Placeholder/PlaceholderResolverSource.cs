@@ -7,13 +7,16 @@ namespace Microsoft.Extensions.Configuration.Placeholder
 {
     /// <summary>
     /// Configuration source used in creating a <see cref="PlaceholderResolverProvider"/> that resolves placeholders
-    /// A placeholder takes the form of <code> ${some:config:reference?default_if_not_present}></code>
+    /// A placeholder takes the form of <code> ${some:config:reference??default_if_not_present}></code>
     /// </summary>
     public class PlaceholderResolverSource : IConfigurationSource
     {
 #if DEBUG
+        /// <summary></summary>
         // ReSharper disable once InconsistentNaming
         public readonly ILoggerFactory? _loggerFactory;
+
+        /// <summary></summary>
         // ReSharper disable once InconsistentNaming
         public readonly IList<IConfigurationSource> _sources;
 #else
