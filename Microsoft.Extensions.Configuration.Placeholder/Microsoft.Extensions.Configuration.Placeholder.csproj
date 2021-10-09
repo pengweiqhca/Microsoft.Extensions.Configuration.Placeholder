@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\Key.snk</AssemblyOriginatorKeyFile>
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <DebugSymbols>true</DebugSymbols>
@@ -15,6 +16,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageReleaseNotes>Microsoft.Extensions.Configuration support placeholder</PackageReleaseNotes>
     <PackageTags>config configuration placeholder</PackageTags>
+    <SignAssembly>True</SignAssembly>
     <Version>1.0.0</Version>
   </PropertyGroup>
 
