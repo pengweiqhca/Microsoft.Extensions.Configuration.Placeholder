@@ -65,7 +65,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder
         {
             EnsureInitialized();
 
-            value = _configuration!.ResolvePlaceholders(_configuration![key], _logger);
+            value = _configuration.ResolvePlaceholders(_configuration[key], _logger);
 
             return !string.IsNullOrEmpty(value);
         }
@@ -79,7 +79,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder
         {
             EnsureInitialized();
 
-            _configuration![key] = value;
+            _configuration[key] = value;
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder
         {
             EnsureInitialized();
 
-            return _configuration!.GetReloadToken();
+            return _configuration.GetReloadToken();
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder
         {
             EnsureInitialized();
 
-            var section = parentPath == null ? _configuration! : _configuration!.GetSection(parentPath);
+            var section = parentPath == null ? _configuration : _configuration.GetSection(parentPath);
 
             var children = section.GetChildren();
 
@@ -124,9 +124,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void EnsureInitialized()
-        {
-            if (_configuration == null) _configuration = new ConfigurationRoot(_providers);
-        }
+        [MemberNotNull("_configuration")]
+        private void EnsureInitialized() => _configuration ??= new ConfigurationRoot(_providers);
     }
 }

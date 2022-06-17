@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\Key.snk</AssemblyOriginatorKeyFile>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <DebugSymbols>true</DebugSymbols>
     <IncludeSymbols>True</IncludeSymbols>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">True</GeneratePackageOnBuild>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
     <PackageId>PW.Extensions.Configuration.Placeholder</PackageId>
     <Authors>Wei Peng</Authors>
@@ -17,6 +17,7 @@
     <PackageReleaseNotes>Microsoft.Extensions.Configuration support placeholder</PackageReleaseNotes>
     <PackageTags>config configuration placeholder</PackageTags>
     <SignAssembly>True</SignAssembly>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <Version>1.0.1</Version>
   </PropertyGroup>
 

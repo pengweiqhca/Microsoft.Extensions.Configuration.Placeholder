@@ -30,10 +30,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder
         /// <param name="logFactory">the logger factory to use</param>
         public PlaceholderResolverSource(IList<IConfigurationSource> sources, ILoggerFactory? logFactory = null)
         {
-            if (sources == null)
-            {
-                throw new ArgumentNullException(nameof(sources));
-            }
+            if (sources == null) throw new ArgumentNullException(nameof(sources));
 
             _sources = new List<IConfigurationSource>(sources);
 
