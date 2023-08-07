@@ -1,4 +1,4 @@
-﻿﻿# Configuration Placeholder Resolver .NET Configuration Provider
+﻿# Configuration Placeholder Resolver .NET Configuration Provider
 
 > dotnet add package PW.Extensions.Configuration.Placeholder
 

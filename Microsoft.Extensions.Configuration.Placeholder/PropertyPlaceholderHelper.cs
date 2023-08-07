@@ -43,7 +43,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder
             // iterate all config entries where the value isn't null and contains both the prefix and suffix that identify placeholders
             foreach (var entry in config.AsEnumerable().Where(e => e.Value != null && e.Value.Contains(Prefix) && e.Value.Contains(Suffix)))
             {
-                logger?.LogTrace("Found a property placeholder '{0}' to resolve for key '{1}", entry.Value, entry.Key);
+                logger?.LogTrace("Found a property placeholder '{Value}' to resolve for key '{Key}", entry.Value, entry.Key);
                 resolvedValues.Add(entry.Key, ParseStringValue(entry.Value, config, visitedPlaceholders, logger, useEmptyStringIfNotFound));
             }
 
@@ -109,7 +109,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder
                         // previously resolved placeholder value.
                         propVal = ParseStringValue(propVal, config, visitedPlaceHolders);
                         result.Replace(startIndex, endIndex + Suffix.Length, propVal);
-                        logger?.LogDebug("Resolved placeholder '{0}'", placeholder);
+                        logger?.LogDebug("Resolved placeholder '{Placeholder}'", placeholder);
                         startIndex = result.IndexOf(Prefix, startIndex + propVal.Length);
                     }
                     else

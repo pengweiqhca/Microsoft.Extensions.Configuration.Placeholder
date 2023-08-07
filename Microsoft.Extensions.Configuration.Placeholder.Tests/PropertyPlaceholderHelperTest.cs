@@ -89,7 +89,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
             var builder1 = new ConfigurationBuilder();
             var dic1 = new Dictionary<string, string>
             {
-                {"bar", "bar"},
+                {"bar", "test"},
                 {"inner", "ar"}
             };
             builder1.AddInMemoryCollection(dic1);
@@ -109,7 +109,7 @@ namespace Microsoft.Extensions.Configuration.Placeholder.Tests
 
             // Act and Assert
             var result1 = config1.ResolvePlaceholders(text1);
-            Assert.Equal("foo=bar", result1);
+            Assert.Equal("foo=test", result1);
             var result2 = config2.ResolvePlaceholders(text2);
             Assert.Equal("actualValue+actualValue", result2);
         }
